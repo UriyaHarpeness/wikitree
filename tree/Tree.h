@@ -3,7 +3,10 @@
 #include "../node/Node.h"
 
 #include <string>
+<<<<<<< HEAD
 #include <time.h>
+=======
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 
 using namespace std;
 
@@ -21,6 +24,7 @@ public:
 
     void save();
 
+<<<<<<< HEAD
     void print_path(Node *page);
 
     void print_solution();
@@ -35,4 +39,10 @@ private:
     int m_depth;
     time_t m_start;
     time_t m_finish;
+=======
+
+private:
+    Node *m_root;
+    uint64_t m_nodes;
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 };

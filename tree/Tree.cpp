@@ -1,10 +1,15 @@
 #include "Tree.h"
 
+<<<<<<< HEAD
 Tree::Tree() : m_root(NULL), m_nodes(0), m_path(NULL) {}
+=======
+Tree::Tree() : m_root(NULL), m_nodes(0) {}
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 
 Tree::~Tree() {}
 
 Node *Tree::find_path(string source, string dest, int depth) {
+<<<<<<< HEAD
     //todo: enable reuse, destruct all and check null, this is a one timer,
     //todo: also input can't be trusted, not to be invalid or same dest and source...
     m_found = false;
@@ -13,11 +18,16 @@ Node *Tree::find_path(string source, string dest, int depth) {
     m_start = time(NULL);
     m_depth = depth;
 
+=======
+    //todo: enable reuse, destruct all and check null, this is a one timer
+    Node::m_tree = this;
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
     if (!this->m_root) {
         m_root = new Node(source, NULL, NULL, depth);
         m_nodes++;
     }
     m_root->resolve_links();
+<<<<<<< HEAD
 
     if (!m_found) m_finish = time(NULL);
 
@@ -29,6 +39,11 @@ void Tree::insert(string page, Node *source) {
 
     //cout << page << endl;
 
+=======
+}
+
+void Tree::insert(string page, Node *source) {
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
     Node *current = m_root;
     Node *prev;
 
@@ -50,6 +65,7 @@ void Tree::insert(string page, Node *source) {
         prev->m_right = page_node;
     }
     m_nodes++;
+<<<<<<< HEAD
 
     if (page == m_dest) {
         m_found = true;
@@ -57,6 +73,8 @@ void Tree::insert(string page, Node *source) {
         m_finish = time(NULL);
     }
 
+=======
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
     page_node->resolve_links();
 }
 
@@ -68,6 +86,7 @@ void Tree::save() {
     for (map<string, vector<string>>::iterator it = pages.begin(); it != pages.end(); it++) {
         cout << it->first << ": " << it->second.size() << endl;
     }
+<<<<<<< HEAD
 }
 
 void Tree::print_path(Node *page) {
@@ -93,3 +112,6 @@ void Tree::print_solution() {
              " was not found with given depth " << m_depth << endl;
     }
 }
+=======
+}
+>>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
