@@ -20,9 +20,18 @@ int main() {
     return 0;*/
 
     Tree tree;
-    tree.find_path("Finger food", "Pepper", 1);
-    //tree.find_path("Pizza", "Pepper", 2);
-    tree.save();
+    // Israel -> Jerusalem -> Muslim_Quarter
+    // Israel -> Jerusalem -> Muslim_Quarter -> Via_Dolorosa
+    // Via Dolorosa <- Crucifixion darkness <- Historicity of the Bible <- Israel
+    // it found another path!!
+    //Node *solution = tree.find_path("Israel", "Via Dolorosa", 3);
+    //Node *solution = tree.find_path("Magic", "Meat", 4);
+    //Node *solution = tree.find_path("Rabbit", "Dichotomy", 4);
+    Node *solution = tree.find_path("Desk", "Crow", 4);
+    //todo: increase depth when not found, until given limit
+    //todo: one thread to resolve links (maybe even read files) and another for managment
+    tree.print_solution();
+    //tree.save();
 
     /*FileUtils::write_and_compress("a.txt", "even more??!?");
     system("cat saved_pages/a.txt");

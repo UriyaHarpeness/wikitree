@@ -4,7 +4,6 @@
 #include "../wikipedia_utils/WikipediaUtils.h"
 
 #include <string>
-#include <mutex>
 
 using namespace std;
 
@@ -40,8 +39,5 @@ private:
     Node *m_right;
     Node *m_parent;
     uint8_t m_balance;
-    mutex m_lock;
     uint8_t m_depth;
 };
-
-//was 65 KB Pizza depth 2
