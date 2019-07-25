@@ -4,10 +4,6 @@
 #include "../wikipedia_utils/WikipediaUtils.h"
 
 #include <string>
-<<<<<<< HEAD
-=======
-#include <mutex>
->>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 
 using namespace std;
 
@@ -43,13 +39,5 @@ private:
     Node *m_right;
     Node *m_parent;
     uint8_t m_balance;
-<<<<<<< HEAD
     uint8_t m_depth;
 };
-=======
-    mutex m_lock;
-    uint8_t m_depth;
-};
-
-//was 65 KB Pizza depth 2
->>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.

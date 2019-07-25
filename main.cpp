@@ -20,7 +20,6 @@ int main() {
     return 0;*/
 
     Tree tree;
-<<<<<<< HEAD
     // Israel -> Jerusalem -> Muslim_Quarter
     // Israel -> Jerusalem -> Muslim_Quarter -> Via_Dolorosa
     // Via Dolorosa <- Crucifixion darkness <- Historicity of the Bible <- Israel
@@ -33,11 +32,6 @@ int main() {
     //todo: one thread to resolve links (maybe even read files) and another for managment
     tree.print_solution();
     //tree.save();
-=======
-    tree.find_path("Finger food", "Pepper", 1);
-    //tree.find_path("Pizza", "Pepper", 2);
-    tree.save();
->>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 
     /*FileUtils::write_and_compress("a.txt", "even more??!?");
     system("cat saved_pages/a.txt");

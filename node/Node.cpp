@@ -3,7 +3,6 @@
 Tree *Node::m_tree = NULL;
 
 Node::Node(string page, Node *parent, Node *source, uint8_t depth) {
-<<<<<<< HEAD
     //todo: still not AVL tree...
     m_page = page;
     m_parent = parent;
@@ -12,14 +11,6 @@ Node::Node(string page, Node *parent, Node *source, uint8_t depth) {
     m_left = NULL;
     m_depth = depth;
     m_balance = 0;
-=======
-    this->m_page = page;
-    this->m_parent = parent;
-    this->m_source = source;
-    this->m_right = NULL;
-    this->m_left = NULL;
-    this->m_depth = depth;
->>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
 }
 
 Node::~Node() {
@@ -47,11 +38,7 @@ void Node::resolve_links() {
     if (!m_depth) return;
     uint16_t links_num;
     string *links = WikipediaUtils::get_page_links(m_page, links_num);
-<<<<<<< HEAD
     for (uint16_t i = 0; i < links_num; i++) {
-=======
-    for (int i = 0; i < links_num; i++) {
->>>>>>> 1df8cad... Working WIP, first commit after a considerebly long development, will improve.
         Node::m_tree->insert(links[i], this);
     }
     delete[] links;
