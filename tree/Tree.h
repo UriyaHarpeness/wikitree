@@ -17,7 +17,9 @@ public:
 
     Node *find_path(string source, string dest, int depth);
 
-    void insert(string page, Node *source);
+    void insert(const string &page, Node *source);
+
+    void rebalance(Node *node);
 
     void save();
 

@@ -4,7 +4,7 @@ Tree *Node::m_tree = NULL;
 
 Node::Node(string page, Node *parent, Node *source, uint8_t depth) {
     //todo: still not AVL tree...
-    m_page = page;
+    m_page = move(page);
     m_parent = parent;
     m_source = source;
     m_right = NULL;
@@ -44,8 +44,14 @@ void Node::resolve_links() {
     delete[] links;
 }
 
+void Node::resolve_links_by_depth(uint8_t depth) {
+    if (m_left) m_left->resolve_links_by_depth(depth);
+    if (m_depth == depth) this->resolve_links();
+    if (m_right) m_right->resolve_links_by_depth(depth);
+}
+
 void Node::get_pages(map<string, vector<string>> &pages) {
+    if (m_left) m_left->get_pages(pages);
     pages[m_source->m_page].push_back(m_page);
     if (m_right) m_right->get_pages(pages);
-    if (m_left) m_left->get_pages(pages);
 }

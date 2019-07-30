@@ -25,7 +25,9 @@ public:
 
     void resolve_links();
 
-    void get_pages(map <string, vector<string>> &pages);
+    void resolve_links_by_depth(uint8_t depth);
+
+    void get_pages(map<string, vector<string>> &pages);
 
     static Tree *m_tree;
 
@@ -38,6 +40,6 @@ private:
     Node *m_left;
     Node *m_right;
     Node *m_parent;
-    uint8_t m_balance;
+    int8_t m_balance;
     uint8_t m_depth;
 };
