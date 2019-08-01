@@ -1,21 +1,20 @@
 #include "Node.h"
 
-Tree *Node::m_tree = NULL;
+Tree *Node::m_tree = nullptr;
 
 Node::Node(string page, Node *parent, Node *source, uint8_t depth) {
-    //todo: still not AVL tree...
     m_page = move(page);
     m_parent = parent;
     m_source = source;
-    m_right = NULL;
-    m_left = NULL;
+    m_right = nullptr;
+    m_left = nullptr;
     m_depth = depth;
-    m_balance = 0;
+    m_height = 1;
 }
 
 Node::~Node() {
-    if (m_right) delete m_right;
-    if (m_left) delete m_left;
+    delete m_right;
+    delete m_left;
 }
 
 bool Node::operator<(const Node &other) {
@@ -37,7 +36,7 @@ bool Node::operator>(const string &other) {
 void Node::resolve_links() {
     if (!m_depth) return;
     uint16_t links_num;
-    string *links = WikipediaUtils::get_page_links(m_page, links_num);
+    string *links = WikipediaUtils::get_page_links(WikipediaUtils::decode_link(m_page), links_num);
     for (uint16_t i = 0; i < links_num; i++) {
         Node::m_tree->insert(links[i], this);
     }
@@ -54,4 +53,27 @@ void Node::get_pages(map<string, vector<string>> &pages) {
     if (m_left) m_left->get_pages(pages);
     pages[m_source->m_page].push_back(m_page);
     if (m_right) m_right->get_pages(pages);
+}
+
+int8_t Node::get_balance() {
+    return ((m_right) ? m_right->m_height : 0) - ((m_left) ? m_left->m_height : 0);
+}
+
+void Node::print() {
+    cout << "value: " << m_page
+         << ", left: " << ((m_left) ? m_left->m_page : "nullptr")
+         << ", right: " << ((m_right) ? m_right->m_page : "nullptr")
+         << ", parent: " << ((m_parent) ? m_parent->m_page : "nullptr")
+         << ", height: " << (int) m_height
+         << ", balance: " << (int) this->get_balance() << endl;
+}
+
+void Node::print_path() {
+    Node *node = this;
+    do {
+        cout << WikipediaUtils::decode_link(node->m_page);
+        node = node->m_source;
+        if (node) cout << " <- ";
+    } while (node);
+    cout << endl;
 }

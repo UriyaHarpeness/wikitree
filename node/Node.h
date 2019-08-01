@@ -29,6 +29,12 @@ public:
 
     void get_pages(map<string, vector<string>> &pages);
 
+    int8_t get_balance();
+
+    void print();
+
+    void print_path();
+
     static Tree *m_tree;
 
     friend class Tree;
@@ -40,6 +46,6 @@ private:
     Node *m_left;
     Node *m_right;
     Node *m_parent;
-    int8_t m_balance;
+    int8_t m_height; //a small number, but in an AVL tree this should suffice
     uint8_t m_depth;
 };

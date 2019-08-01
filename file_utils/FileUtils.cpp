@@ -29,10 +29,10 @@ void FileUtils::write_and_compress(string filename, string *&content, uint16_t l
         BZ2_bzWrite(&bzerror, bzfile, const_cast<char *>(changeable.c_str()), changeable.length());
     }
 
-    BZ2_bzWriteClose(&bzerror, bzfile, 0, NULL, NULL);
+    BZ2_bzWriteClose(&bzerror, bzfile, 0, nullptr, nullptr);
 }
 
-string *FileUtils::read_and_decompress(string filename, uint16_t &lines) {
+string *FileUtils::read_and_decompress(const string &filename, uint16_t &lines) {
     int bzError;
     BZFILE *bzfile;
     char buffer[4096];

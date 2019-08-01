@@ -17,6 +17,11 @@ add_executable(wikitree
         wikipedia_utils/WikipediaUtils.cpp
         wikipedia_utils/WikipediaUtils.h)
 
+add_custom_target(create-saved-pages-folder
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/saved_pages)
+
+add_dependencies(wikitree create-saved-pages-folder)
+
 target_link_libraries(wikitree curl)
 target_link_libraries(wikitree jsoncpp)
 target_link_libraries(wikitree curlpp)

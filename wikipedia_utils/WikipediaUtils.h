@@ -11,7 +11,7 @@ using namespace std;
 namespace WikipediaUtils {
     string *get_page_links(const string &page, uint16_t &links_num);
 
-    bool is_link_valid(string link);
+    bool is_link_valid(const string &link);
 
     string encode_link(string link);
 
