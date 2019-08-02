@@ -34,19 +34,20 @@ bool Node::operator>(const string &other) {
 }
 
 void Node::resolve_links() {
-    if (!m_depth) return;
+    if (m_tree->m_found) return;
     uint16_t links_num;
-    string *links = WikipediaUtils::get_page_links(WikipediaUtils::decode_link(m_page), links_num);
+    string *links = WikipediaUtils::get_page_links(WikipediaUtils::unpack_link(m_page), links_num);
     for (uint16_t i = 0; i < links_num; i++) {
         Node::m_tree->insert(links[i], this);
     }
     delete[] links;
 }
 
-void Node::resolve_links_by_depth(uint8_t depth) {
+void Node::resolve_links_by_depth(const uint8_t &depth) {
+    Node *current_right = m_right; // this is required, since `m_right` may change if the node rotates.
     if (m_left) m_left->resolve_links_by_depth(depth);
     if (m_depth == depth) this->resolve_links();
-    if (m_right) m_right->resolve_links_by_depth(depth);
+    if (current_right) current_right->resolve_links_by_depth(depth);
 }
 
 void Node::get_pages(map<string, vector<string>> &pages) {
@@ -60,10 +61,10 @@ int8_t Node::get_balance() {
 }
 
 void Node::print() {
-    cout << "value: " << m_page
-         << ", left: " << ((m_left) ? m_left->m_page : "nullptr")
-         << ", right: " << ((m_right) ? m_right->m_page : "nullptr")
-         << ", parent: " << ((m_parent) ? m_parent->m_page : "nullptr")
+    cout << "value: " << WikipediaUtils::unpack_link(m_page)
+         << ", left: " << ((m_left) ? WikipediaUtils::unpack_link(m_left->m_page) : "nullptr")
+         << ", right: " << ((m_right) ? WikipediaUtils::unpack_link(m_right->m_page) : "nullptr")
+         << ", parent: " << ((m_parent) ? WikipediaUtils::unpack_link(m_parent->m_page) : "nullptr")
          << ", height: " << (int) m_height
          << ", balance: " << (int) this->get_balance() << endl;
 }
@@ -71,7 +72,7 @@ void Node::print() {
 void Node::print_path() {
     Node *node = this;
     do {
-        cout << WikipediaUtils::decode_link(node->m_page);
+        cout << WikipediaUtils::unpack_link(node->m_page);
         node = node->m_source;
         if (node) cout << " <- ";
     } while (node);

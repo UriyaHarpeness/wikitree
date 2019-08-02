@@ -11,7 +11,7 @@ string *WikipediaUtils::get_page_links(const string &page, uint16_t &links_num) 
         FileUtils::write_and_compress(page, links, links_num);
     }
     for (uint16_t i = 0; i < links_num; i++) {
-        links[i] = encode_link(move(links[i]));
+        links[i] = pack_link(move(links[i]));
     }
     return links;
 }
@@ -23,7 +23,7 @@ bool WikipediaUtils::is_link_valid(const string &link) {
     return true;
 }
 
-string WikipediaUtils::encode_link(string link) {
+string WikipediaUtils::pack_link(string link) {
     string encoded_link(ceil(link.length() * 6.0 / 8.0), 0);
     uint16_t bits_offset = 0;
     uint16_t char_offset;
@@ -67,7 +67,7 @@ string WikipediaUtils::encode_link(string link) {
     return encoded_link;
 }
 
-string WikipediaUtils::decode_link(string link) {
+string WikipediaUtils::unpack_link(string link) {
     uint16_t link_size = floor((link.length()) * 8.0 / 6.0);
     if ((link[link.length() - 1] & 0b11111100u) == 0b11111100u) {
         link_size--;

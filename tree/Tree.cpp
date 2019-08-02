@@ -1,6 +1,6 @@
 #include "Tree.h"
 
-Tree::Tree() : m_root(nullptr), m_nodes(0), m_path(nullptr) {}
+Tree::Tree() = default;
 
 Tree::~Tree() = default;
 
@@ -8,8 +8,8 @@ Node *Tree::find_path(string source, string dest, uint8_t depth) {
     //todo: enable reuse, destruct all and check null, this is a one timer,
     //todo: also input can't be trusted, not to be invalid or same dest and source...
     m_found = false;
-    m_source = WikipediaUtils::encode_link(move(source));
-    m_dest = WikipediaUtils::encode_link(move(dest));
+    m_source = WikipediaUtils::pack_link(move(source));
+    m_dest = WikipediaUtils::pack_link(move(dest));
     Node::m_tree = this;
     m_start = time(nullptr);
     m_depth = depth;
@@ -91,8 +91,6 @@ Node *Tree::update_height(Node *node) {
 }
 
 void Tree::rebalance(Node *node) {
-    //todo: rebalancing needs to support moving other pointers, some are not null since it happens not only on leafs
-
     if (node->get_balance() == 2) {
         if (node->m_right->get_balance() == 1) {
             this->rotate_rr(node);
@@ -239,8 +237,8 @@ void Tree::print_solution() {
     } else {
         cout << "after going through " << m_nodes <<
              " pages, which took " << m_finish - m_start <<
-             " seconds, the path between " << m_source <<
-             " and " << m_dest <<
+             " seconds, the path between " << WikipediaUtils::unpack_link(m_source) <<
+             " and " << WikipediaUtils::unpack_link(m_dest) <<
              " was not found with given depth " << (int) m_depth << endl;
     }
 }
