@@ -10,7 +10,7 @@ using namespace std;
 class Node;
 
 /**
- * This call is an implementation of an AVL tree, this data type for storing the links was chosen due to its small
+ * This class is an implementation of an AVL tree, this data type for storing the links was chosen due to its small
  * complexity in searching for a value, which happens the most in this project. the AVL tree's height in the worst case
  * is 1.44*lg(n), in contrast to an unbalanced binary search tree.
  */
@@ -96,13 +96,13 @@ public:
      * Perform a right-left rotation on the given node.
      *
      * For example:
-     *       A             C
+     *       A             B
      *        \          /  \
-     *         B   =>   A    B
+     *         C   =>   A    C
      *        /
-     *       C
+     *       B
      *
-     * @param node  The node to rotate, in the example, `node` is `A`.
+     * @param node  The node to rotate, in the example, `node` is `B`.
      */
     void rotate_rl(Node *node);
 
@@ -110,13 +110,13 @@ public:
      * Perform a left-right rotation on the given node.
      *
      * For example:
-     *       A             C
+     *       C             B
      *     /             /  \
-     *    B        =>   B    A
+     *    A        =>   A    C
      *     \
-     *      C
+     *      B
      *
-     * @param node  The node to rotate, in the example, `node` is `A`.
+     * @param node  The node to rotate, in the example, `node` is `C`.
      */
     void rotate_lr(Node *node);
 
@@ -124,13 +124,13 @@ public:
      * Perform a left rotation on the given node.
      *
      * For example:
-     *       A            B
+     *       C            B
      *     /            /  \
-     *    B       =>   C    A
+     *    B       =>   A    C
      *  /
-     * C
+     * A
      *
-     * @param node  The node to rotate, in the example, `node` is `A`.
+     * @param node  The node to rotate, in the example, `node` is `C`.
      */
     void rotate_ll(Node *node);
 

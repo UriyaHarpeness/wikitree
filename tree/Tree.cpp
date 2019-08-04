@@ -34,8 +34,6 @@ Node *Tree::find_path(string source, string dest, uint8_t depth) {
 void Tree::insert(const string &page, Node *source) {
     if (m_found) return;
 
-    //cout << page << endl;
-
     Node *current = m_root;
     Node *prev = nullptr;
 
@@ -45,13 +43,13 @@ void Tree::insert(const string &page, Node *source) {
             current = current->m_left;
         } else if (*current < page) {
             current = current->m_right;
-        } else { // value already exists
+        } else { // Value already exists.
             return;
         }
     }
 
-    //the warnings about "prev" being null are irrelevant, since its value is
-    //set if root has a value, which he does, when a call to "find_path" is invoked.
+    // The warnings about `prev` being null are irrelevant, since its value is set if root has a value, which he does,
+    // when a call to `find_path` is invoked.
     Node *page_node = new Node(page, prev, source, source->m_depth - 1);
     if (*prev > page) {
         prev->m_left = page_node;
@@ -73,7 +71,7 @@ void Tree::insert(const string &page, Node *source) {
 }
 
 Node *Tree::update_height(Node *node) {
-    uint8_t height = 1; // node is always a leaf at this point
+    uint8_t height = 1;
     node = node->m_parent;
     while (node) {
         height++;
@@ -94,13 +92,13 @@ void Tree::rebalance(Node *node) {
     if (node->get_balance() == 2) {
         if (node->m_right->get_balance() == 1) {
             this->rotate_rr(node);
-        } else { // balance is -1
+        } else { // Balance is -1.
             this->rotate_rl(node);
         }
-    } else { // balance is -2
+    } else { // Balance is -2.
         if (node->m_left->get_balance() == 1) {
             this->rotate_lr(node);
-        } else { // balance is -1
+        } else { // Balance is -1.
             this->rotate_ll(node);
         }
     }
@@ -109,7 +107,7 @@ void Tree::rebalance(Node *node) {
 void Tree::rotate_rr(Node *node) {
     Node *new_head = node->m_right;
 
-    // rotation start
+    // Rotation start.
     if (node == m_root) {
         m_root = new_head;
     } else {
@@ -125,16 +123,16 @@ void Tree::rotate_rr(Node *node) {
     if (node->m_right) node->m_right->m_parent = node;
     new_head->m_left = node;
     new_head->m_left->m_parent = new_head;
-    // rotation end
+    // Rotation end.
 
-    // height updating
+    // Height updating.
     node->m_height -= 1;
 }
 
 void Tree::rotate_rl(Node *node) {
     Node *new_head = node->m_right->m_left;
 
-    // rotation start
+    // Rotation start.
     if (node == m_root) {
         m_root = new_head;
     } else {
@@ -154,9 +152,9 @@ void Tree::rotate_rl(Node *node) {
     if (node->m_right) node->m_right->m_parent = node;
     new_head->m_left = node;
     node->m_parent = new_head;
-    // rotation end
+    // Rotation end.
 
-    // height updating
+    // Height updating.
     node->m_height -= 1;
     new_head->m_right->m_height -= 1;
     new_head->m_height += 1;
@@ -165,7 +163,7 @@ void Tree::rotate_rl(Node *node) {
 void Tree::rotate_lr(Node *node) {
     Node *new_head = node->m_left->m_right;
 
-    // rotation start
+    // Rotation start.
     if (node == m_root) {
         m_root = new_head;
     } else {
@@ -185,9 +183,9 @@ void Tree::rotate_lr(Node *node) {
     if (node->m_left) node->m_left->m_parent = node;
     new_head->m_right = node;
     node->m_parent = new_head;
-    // rotation end
+    // Rotation end.
 
-    // height updating
+    // Height updating.
     node->m_height -= 1;
     new_head->m_left->m_height -= 1;
     new_head->m_height += 1;
@@ -196,7 +194,7 @@ void Tree::rotate_lr(Node *node) {
 void Tree::rotate_ll(Node *node) {
     Node *new_head = node->m_left;
 
-    // rotation start
+    // Rotation start.
     if (node == m_root) {
         m_root = new_head;
     } else {
@@ -212,9 +210,9 @@ void Tree::rotate_ll(Node *node) {
     if (node->m_left) node->m_left->m_parent = node;
     new_head->m_right = node;
     new_head->m_right->m_parent = new_head;
-    // rotation end
+    // Rotation end.
 
-    // height updating
+    // Height updating.
     node->m_height -= 1;
 }
 

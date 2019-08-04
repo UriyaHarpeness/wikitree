@@ -44,7 +44,7 @@ void Node::resolve_links() {
 }
 
 void Node::resolve_links_by_depth(const uint8_t &depth) {
-    Node *current_right = m_right; // this is required, since `m_right` may change if the node rotates.
+    Node *current_right = m_right; // This is required, since `m_right` may change if the node rotates.
     if (m_left) m_left->resolve_links_by_depth(depth);
     if (m_depth == depth) this->resolve_links();
     if (current_right) current_right->resolve_links_by_depth(depth);

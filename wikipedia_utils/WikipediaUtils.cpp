@@ -47,7 +47,6 @@ string WikipediaUtils::pack_link(string link) {
         } else if (link[i] == '-') {
             encoded_char = 30;
         }
-        //cout << link[i] << ": " << encoded_char << " " << char_offset << " " << bits_offset << endl;
         encoded_link[char_offset] |= encoded_char << bits_offset;
         encoded_link[char_offset + 1] |= encoded_char >> 8 - bits_offset;
     }
@@ -55,14 +54,6 @@ string WikipediaUtils::pack_link(string link) {
     if ((i * 6 % 8) == 2) {
         encoded_link[(i * 6) / 8] |= 0b11111100u;
     }
-
-    /*uint8_t t;
-    cout << encoded_link.length() * 8 << " bits: ";
-    for (size_t j = 0; j < encoded_link.length() * 8; j++) {
-        t = (encoded_link[j / 8] >> (j % 8));
-        cout << t % 2;
-    }
-    cout << endl;*/
 
     return encoded_link;
 }
@@ -76,6 +67,8 @@ string WikipediaUtils::unpack_link(string link) {
     uint16_t bits_offset;
     uint16_t char_offset;
     uint16_t encoded_char;
+
+    //todo: resolve warning about bitwise operations.
 
     for (int i = 0; i < link_size; i++) {
         encoded_char = 0;
