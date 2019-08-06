@@ -5,6 +5,9 @@ string *WebUtils::get_page_links(string page, uint16_t &links_num) {
     Json::Reader reader;
     Json::Value obj;
     replace(page.begin(), page.end(), ' ', '_');
+    for (size_t index = page.find('&', 0); index != string::npos; index = page.find('&', index)) {
+        page.replace(index, 1, "%26");
+    }
     {
         curlpp::Cleanup clean;
         curlpp::Easy r;

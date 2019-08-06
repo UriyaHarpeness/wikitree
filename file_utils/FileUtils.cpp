@@ -25,7 +25,7 @@ void FileUtils::write_and_compress(const string &filename, string *&lines, uint1
 
     for (uint16_t i = 0; i < lines_num; i++) {
         changeable = lines[i] + '\n';
-        // this is dangerous, we only use const_cast because we will no longer use the content and assume it's the same
+        // This is dangerous, we only use const_cast because we will no longer use the content and assume it's the same.
         BZ2_bzWrite(&bzerror, bzfile, const_cast<char *>(changeable.c_str()), changeable.length());
     }
 

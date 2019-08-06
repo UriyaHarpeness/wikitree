@@ -2,22 +2,27 @@
 
 Tree::Tree() = default;
 
-Tree::~Tree() = default;
+Tree::~Tree() {
+    delete m_root;
+}
 
 Node *Tree::find_path(string source, string dest, uint8_t depth) {
-    //todo: enable reuse, destruct all and check null, this is a one timer,
-    //todo: also input can't be trusted, not to be invalid or same dest and source...
+    // Cleanup if this isn't the first run, this function is reusable.
+    delete m_root;
+
     m_found = false;
     m_source = WikipediaUtils::pack_link(move(source));
     m_dest = WikipediaUtils::pack_link(move(dest));
     Node::m_tree = this;
     m_start = time(nullptr);
     m_depth = depth;
+    m_nodes = 1;
 
-    if (!this->m_root) {
-        m_root = new Node(m_source, nullptr, nullptr, depth);
-        m_nodes++;
-    }
+    cout << "wikitree's find_path started, searching the path between " << WikipediaUtils::unpack_link(m_source) <<
+         " and " << WikipediaUtils::unpack_link(m_dest) <<
+         " with given depth " << (int) m_depth << endl;
+
+    m_root = new Node(m_source, nullptr, nullptr, depth);
 
     while (depth && (!m_found)) {
         cout << "current node count at: " << m_nodes <<
@@ -214,16 +219,6 @@ void Tree::rotate_ll(Node *node) {
 
     // Height updating.
     node->m_height -= 1;
-}
-
-void Tree::save() {
-    if (!m_root) return;
-    map<string, vector<string>> pages;
-    if (m_root->m_right) m_root->m_right->get_pages(pages);
-    if (m_root->m_left) m_root->m_left->get_pages(pages);
-    for (auto &page : pages) {
-        cout << page.first << ": " << page.second.size() << endl;
-    }
 }
 
 void Tree::print_solution() {

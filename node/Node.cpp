@@ -2,7 +2,7 @@
 
 Tree *Node::m_tree = nullptr;
 
-Node::Node(string page, Node *parent, Node *source, uint8_t depth) {
+Node::Node(string page, Node *parent, const Node *source, const uint8_t depth) {
     m_page = move(page);
     m_parent = parent;
     m_source = source;
@@ -50,12 +50,6 @@ void Node::resolve_links_by_depth(const uint8_t &depth) {
     if (current_right) current_right->resolve_links_by_depth(depth);
 }
 
-void Node::get_pages(map<string, vector<string>> &pages) {
-    if (m_left) m_left->get_pages(pages);
-    pages[m_source->m_page].push_back(m_page);
-    if (m_right) m_right->get_pages(pages);
-}
-
 int8_t Node::get_balance() {
     return ((m_right) ? m_right->m_height : 0) - ((m_left) ? m_left->m_height : 0);
 }
@@ -70,7 +64,7 @@ void Node::print() {
 }
 
 void Node::print_path() {
-    Node *node = this;
+    const Node *node = this;
     do {
         cout << WikipediaUtils::unpack_link(node->m_page);
         node = node->m_source;

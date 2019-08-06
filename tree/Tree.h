@@ -134,9 +134,6 @@ public:
      */
     void rotate_ll(Node *node);
 
-    //todo: not used, needs to search what was the purpose.
-    void save();
-
     /**
      * Print the solution as a result of `find_path`.
      *

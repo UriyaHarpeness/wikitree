@@ -28,7 +28,7 @@ namespace WikipediaUtils {
     /**
      * Check if the given link is valid.
      *
-     * The characters that are currently supported are: 'A'-'Z', 'a'-'z', '-', ' ', '(', and ')'.
+     * The characters that are currently supported are: 'A'-'Z', 'a'-'z', '-', ' ', '(', ')', ',', '&', and '''.
      *
      * @relatesalso pack_link
      * @param link  The link to check if all of its characters are valid, which means it can be packed.
@@ -47,7 +47,7 @@ namespace WikipediaUtils {
      * @param link  The link to pack (assumed to be valid).
      * @return  The packed link.
      */
-    string pack_link(string link);
+    string pack_link(const string &link);
 
     /**
      * Unpack a given link.
@@ -56,5 +56,5 @@ namespace WikipediaUtils {
      * @param link  The link to unpack.
      * @return  The unpacked link.
      */
-    string unpack_link(string link);
+    string unpack_link(const string &link);
 }

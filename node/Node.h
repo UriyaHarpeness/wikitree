@@ -23,7 +23,7 @@ public:
      * @param source    The page from which we got to this page.
      * @param depth     The resolving depth of the node.
      */
-    Node(string page, Node *parent, Node *source, uint8_t depth);
+    Node(string page, Node *parent, const Node *source, const uint8_t depth);
 
     /**
      * Destructor.
@@ -88,9 +88,6 @@ public:
      */
     void resolve_links_by_depth(const uint8_t &depth);
 
-    //todo: currently not used, needs to see what i wanted to do here...
-    void get_pages(map<string, vector<string>> &pages);
-
     /**
      * Get the balance of the node.
      *
@@ -126,7 +123,7 @@ public:
 private:
 
     /// The source of this node, meaning the node from which page a link to this node's page was found.
-    Node *m_source;
+    const Node *m_source;
 
     /// The node's corresponding page, this value is packed.
     string m_page;

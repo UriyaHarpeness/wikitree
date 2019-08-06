@@ -19,7 +19,7 @@ apt install gcc cmake libcurl4-openssl-dev libcurlpp-dev libjsoncpp-dev libbz2-d
 
 ### Building
 
-After installing all the requirements, building the project is a straight-forward as it can be.
+After installing all the requirements, building the project is as straight-forward as it can be.
 
 ```
 cmake .
@@ -36,14 +36,16 @@ Now try using Wikitree, take it for a test run, for example:
 ./wikitree Korn "Slipknot (band)" 3
 ```
 
-Wikitree takes 3 arguments: `source`, `dest` and `max depth`
-`source` is where to start the search from,
-`dest` is what we search for, and `max depth` is the maximum search depth.
-If you have any questions please review the code's comments, these should suffice.
+Wikitree takes 3 arguments: `source`, `dest` and `max depth`.
+* `source` is where to start the search from,
+* `dest` is what we search for.
+* `max depth` is the maximum search depth.
+* If you have any questions please review the code's comments, these should suffice.
 
 ## Contributing
 
 Feel free to contact me if you have any comments, questions, ideas, and anything else you think I should be aware of.
+Also, tell me what crazy connections you have found using Wikitree, I'd love to know.
 
 ## Authors
 
