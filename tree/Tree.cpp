@@ -1,9 +1,12 @@
 #include "Tree.h"
 
-Tree::Tree() = default;
+Tree::Tree() {
+    m_links_resolver = new LinksResolver;
+}
 
 Tree::~Tree() {
     delete m_root;
+    delete m_links_resolver;
 }
 
 Node *Tree::find_path(string source, string dest, uint8_t depth) {
@@ -25,10 +28,14 @@ Node *Tree::find_path(string source, string dest, uint8_t depth) {
     m_root = new Node(m_source, nullptr, nullptr, depth);
 
     while (depth && (!m_found)) {
+#if DEBUG_DEPTH
         cout << "current node count at: " << m_nodes <<
              ", resolving depth: " << (int) depth <<
              ", seconds count so far: " << time(nullptr) - m_start << endl;
+#endif // DEBUG_DEPTH
         m_root->resolve_links_by_depth(depth--);
+        m_links_resolver->wait_until_done();
+        m_links_resolver->join_threads();
     }
 
     if (!m_found) m_finish = time(nullptr);
@@ -37,6 +44,8 @@ Node *Tree::find_path(string source, string dest, uint8_t depth) {
 }
 
 void Tree::insert(const string &page, Node *source) {
+    lock_guard<mutex> lock(m_insertion_lock);
+
     if (m_found) return;
 
     Node *current = m_root;
@@ -62,6 +71,12 @@ void Tree::insert(const string &page, Node *source) {
         prev->m_right = page_node;
     }
     m_nodes++;
+
+#if DEBUG_PROGRESS
+    if (m_nodes % (uint64_t) pow(2, 15) == 0) {
+        cout << "current node count at " << m_nodes << " and counting" << endl;
+    }
+#endif // DEBUG_PROGRESS
 
     if (page == m_dest) {
         m_found = true;

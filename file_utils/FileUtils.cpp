@@ -14,7 +14,9 @@ void FileUtils::write_and_compress(const string &filename, string *&lines, uint1
     const int BLOCK_MULTIPLIER = 9;
     BZFILE *bzfile;
 
+#if DEBUG_PAGES_RESOLVE
     cout << "writing values for: " << filename << ", number: " << lines_num << endl;
+#endif // DEBUG_PAGES_RESOLVE
 
     //todo: this is only for linux, perhaps make this whole code work on windows as well, like if curl would compile there
     bz2File = fopen((saved_pages + filename + bz2).c_str(), "wb");
@@ -55,7 +57,9 @@ string *FileUtils::read_and_decompress(const string &filename, uint16_t &lines_n
     newline_pos = find(content.begin(), content.end(), '\n');
     lines_num = atoi(string(content.begin(), newline_pos).c_str());
 
+#if DEBUG_PAGES_RESOLVE
     cout << "reading values for: " << filename << ", number: " << lines_num << endl;
+#endif // DEBUG_PAGES_RESOLVE
 
     str_links = new string[lines_num];
     for (uint16_t i = 0; i < lines_num; i++) {

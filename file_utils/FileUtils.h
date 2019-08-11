@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../debug.h"
+
 #include <string>
 #include <bzlib.h>
 #include <fstream>

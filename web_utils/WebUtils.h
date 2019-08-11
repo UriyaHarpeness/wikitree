@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../wikipedia_utils/WikipediaUtils.h"
+#include "../config.h"
+#include "../debug.h"
 
 #include <jsoncpp/json/json.h>
 #include <curlpp/cURLpp.hpp>
@@ -19,6 +21,10 @@ namespace WebUtils {
     /// The URL prefix to get the page's links from.
     static const string wikipedia_url = "https://en.wikipedia.org/w/api.php?action=parse&prop=links&format=json&page=";
 
+    /// The retry count for `curlpp::Easy::perform`, when using multiple threads an exception may be thrown which is
+    /// temporary, hence the retry.
+    static const uint8_t retry_count = MAXIMUM_RESOLVE_ERRORS;
+
     /**
      * Get the links from a given page.
      *
@@ -27,6 +33,7 @@ namespace WebUtils {
      * @param page              The page to get links for.
      * @param[out] links_num    The number of links found in the page.
      * @return  The links found in the page.
+     * @throw   curlpp::LibcurlRuntimeError
      */
     string *get_page_links(string page, uint16_t &links_num);
 }

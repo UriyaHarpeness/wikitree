@@ -82,7 +82,7 @@ string WikipediaUtils::unpack_link(const string &link) {
         encoded_char = 0;
         bits_offset = (i * 6) & 0b111u;
         char_offset = (i * 6) >> 3;
-        encoded_char |= ((uint8_t) (link[char_offset] & 0b00111111u << bits_offset)) >> bits_offset;
+        encoded_char |= ((uint8_t)(link[char_offset] & 0b00111111u << bits_offset)) >> bits_offset;
         encoded_char |= (link[char_offset + 1] & 0b00111111u >> (8 - bits_offset)) << (8 - bits_offset);
         if ((encoded_char >= 1) && (encoded_char <= 26)) {
             decoded_link[i] = encoded_char | 0b01100000u;

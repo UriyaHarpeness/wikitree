@@ -44,6 +44,9 @@ namespace WikipediaUtils {
      * length of 12 will be reduced to a string of length 9, when saving many pages, the packing can make major
      * difference.
      *
+     * @note    The packed link is stored in a string, but comparing it with another string does not give the same
+     *          result expected from comparing the unpacked link, this does not discourage from comparing strings, just
+     *          requires knowing when it's a packed string and when it's not.
      * @param link  The link to pack (assumed to be valid).
      * @return  The packed link.
      */

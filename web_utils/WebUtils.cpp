@@ -4,6 +4,7 @@
 string *WebUtils::get_page_links(string page, uint16_t &links_num) {
     Json::Reader reader;
     Json::Value obj;
+    uint8_t current_retry_count = retry_count;
     replace(page.begin(), page.end(), ' ', '_');
     for (size_t index = page.find('&', 0); index != string::npos; index = page.find('&', index)) {
         page.replace(index, 1, "%26");
@@ -15,7 +16,18 @@ string *WebUtils::get_page_links(string page, uint16_t &links_num) {
 
         ostringstream response;
         r.setOpt(new curlpp::options::WriteStream(&response));
-        r.perform();
+
+        while (current_retry_count--) {
+            try {
+                r.perform();
+                break;
+            } catch (const curlpp::LibcurlRuntimeError &e) {
+                // May occur when using multiple threads, or when the network is disconnected, so there's a retry count.
+                if (!current_retry_count) {
+                    throw e;
+                }
+            }
+        }
 
         reader.parse(response.str(), obj);
     }
@@ -24,7 +36,9 @@ string *WebUtils::get_page_links(string page, uint16_t &links_num) {
 
     auto *str_links = new string[links.end() - links.begin()];
 
+#if DEBUG_PAGES_RESOLVE
     cout << "requesting value for: " << page << ", number: " << links.end() - links.begin() << endl;
+#endif // DEBUG_PAGES_RESOLVE
 
     links_num = 0;
     for (auto &link : links) {

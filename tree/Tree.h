@@ -1,13 +1,17 @@
 #pragma once
 
 #include "../node/Node.h"
+#include "../links_resolver/LinksResolver.h"
 
 #include <string>
 #include <ctime>
+#include <mutex>
 
 using namespace std;
 
 class Node;
+
+class LinksResolver;
 
 /**
  * This class is an implementation of an AVL tree, this data type for storing the links was chosen due to its small
@@ -49,6 +53,7 @@ public:
      *
      * A corresponding node is created if `page` didn't already exists in the tree, later on calls to `update_height`
      * and `rebalance` are invoked, in order to balance the tree if an insertion has been made.
+     * This function runs once at a time, this simplifies using threads, and drastically lowers the size in memory.
      *
      * @param page      The page to insert a corresponding node of to the tree.
      * @param source    The node from whose page this `page` was found.
@@ -145,6 +150,9 @@ public:
     /// Was `m_dest` found, denotes if `find_path` was successful, used for stopping the search.
     bool m_found{};
 
+    /// The LinksResolver for Nodes to use, enables using multi-threading for resolving pages' links.
+    LinksResolver *m_links_resolver;
+
 
 private:
 
@@ -172,4 +180,7 @@ private:
 
     /// The finish time of the search, in seconds, since epoch.
     time_t m_finish{};
+
+    /// A mutex to insure only one node is inserted at a time.
+    mutex m_insertion_lock{};
 };
