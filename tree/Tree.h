@@ -27,7 +27,7 @@ public:
     Tree();
 
     /**
-     * Destructor/
+     * Destructor.
      */
     ~Tree();
 
